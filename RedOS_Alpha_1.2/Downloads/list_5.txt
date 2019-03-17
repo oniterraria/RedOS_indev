@@ -14,7 +14,6 @@ https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/empty.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/file.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/folder.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/indev.lua;
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/info.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/insert_0.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/insert_1.lua;
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/insert_2.lua;
