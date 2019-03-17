@@ -1,1 +1,1 @@
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/home/Help.txt
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/home/Help.txt
