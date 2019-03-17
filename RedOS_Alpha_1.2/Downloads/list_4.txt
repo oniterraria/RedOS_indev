@@ -1,0 +1,17 @@
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/cursor.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/fileList.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuBuffer.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuChoice.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuEditor.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuFile.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuFolder.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuInsert.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuSettings.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuSwitcher.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/menuSystem.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/screenBuffer.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/specialShell.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/test_1.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/test_2.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/test_3.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS_Alpha_1.2/lib/test_4.lua
