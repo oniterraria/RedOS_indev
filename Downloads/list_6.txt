@@ -1,0 +1,13 @@
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/.config&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/buffer.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/choice.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/clean.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy_1.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy_2.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy_3.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy_4.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/core.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/delete.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/editor.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/empty.lua
