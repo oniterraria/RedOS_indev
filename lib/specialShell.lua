@@ -88,9 +88,11 @@ function specialShell.inserting(copyPath, path, copied, files, index, config)
         end
         menu = canvas.menuShow(15, 4, 36, 12, 16, 9, 20, "/RedOS/insert_4.lua", 16, 5, name, 2, 1, files, index) 
         if menu == 1 then
-          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
-          if menu then
-            Selected[1] = true
+          if i ~= #copied then
+            menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
+            if menu then
+              Selected[1] = true
+            end
           end   
         else
           canvas.cursor(files, index)
@@ -127,9 +129,11 @@ function specialShell.inserting(copyPath, path, copied, files, index, config)
             end
           end 
         elseif menu == 2 then
-          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)  
-          if menu then
-            Selected[2] = true
+          if i ~= #copied then
+            menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)  
+            if menu then
+              Selected[2] = true
+            end
           end 
         else
           canvas.cursor(files, index)
@@ -169,16 +173,20 @@ function specialShell.inserting(copyPath, path, copied, files, index, config)
             end
           end 
         elseif menu == 2 then
-          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
-          if menu then
-            Selected[3] = true
+          if i ~= #copied then
+            menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
+            if menu then
+              Selected[3] = true
+            end
           end
           filesystem.copy(copyPath .. copied[i], path .. copied[i])
           d = d + 1    
         elseif menu == 3 then
-          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
-          if menu then
-            Selected[4] = true
+          if i ~= #copied then
+            menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
+            if menu then
+              Selected[4] = true
+            end
           end 
         else
           canvas.cursor(files, index)
