@@ -38,9 +38,7 @@ for _,line in ipairs(lines) do
 end
 io.write(borders[3][1] .. string.rep(borders[3][2], maxLine + 2) .. borders[3][3] .. "\n")
 
-print(">> Starting RedOS v1.2 [Alpha] by LexaDriver")
-print(">> You are running [Alpha] version of RedOS, it may contains some issues")
-os.sleep(0.5)
+print(">> Starting RedOS v1.2 [Beta] by LexaDriver")
 
 local shell = require("shell")
 shell.execute("/RedOS/core.lua")

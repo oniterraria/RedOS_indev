@@ -1,261 +1,45 @@
 local specialShell = {}
 
-local term = require("term")
-local os = require("os")
-local component = require("component")
-local filesystem = require("filesystem")
 local shell = require("shell")
-local event = require("event")
+local filesystem = require("filesystem")
+local canvas = require("canvas")
+local component = require("component")
 
 local gpu = component.gpu
 
-local menuSwitcher = require("menuSwitcher")
-local menuInsert = require("menuInsert")
-local screenBuffer = require("screenBuffer")
-local cursor = require("cursor")
+function specialShell.position(path, item, config)
 
-function specialShell.finderLite(path, name)
+  local index
+  local page
 
-  local index = 1
-  local page = 1  
+  local j
+  local k = 1
 
   local allFiles = {}
 
-  local e = 1
-  local i = 0
-  local j
-      
-    for j in filesystem.list(path) do
-      allFiles[e] = j
-      e = e + 1
-    end
-
-    i = 1
-
-    table.sort(allFiles)      
-      
-    while i <= #allFiles do   
-      if allFiles[i] == name then
-        index = i          
-        page = index / 12
-        page = math.ceil(page)  
-        index = index - ((page - 1) * 12)
-        break 
+  for j in filesystem.list(path) do
+    if (string.sub(j, 1, 1) == ".") then
+      if config then
+        allFiles[k] = path .. j
+        k = k + 1
       end
-      i = i + 1  
-    end
-
-  return index, page
-
-end
-
-function specialShell.finder(path)
-
-  local name = ""
-  local success = true
-  local index = 0
-  local page = 0  
-
-  local allFiles = {}
-
-  local e = 1
-  local i = 0
-  local j
-
-  term.setCursor(1, 1)
-  print(">> Input the name of file or folder")
-  print(">> You want to find")
-  print("<<")
-  term.setCursor(4, 3)
-  term.read()
-
-  while (gpu.get(4 + i, 3) ~= " ") and (i < 33) do
-
-    name = name .. tostring(gpu.get(4 + i, 3))
-
-    if i == 32 then  
-      
-      success = false
-      print(">> Error : name is too long")
-      os.sleep(1)
-      print(">> Returning to worktable")
-      os.sleep(1)
-      break
-
-    end
-
-    if gpu.get(4 + i, 3)  == "#" or
-       gpu.get(4 + i, 3)  == "%" or
-       gpu.get(4 + i, 3)  == "{" or
-       gpu.get(4 + i, 3)  == "}" or 
-       gpu.get(4 + i, 3)  == "<" or 
-       gpu.get(4 + i, 3)  == ">" or
-       gpu.get(4 + i, 3)  == "*" or
-       gpu.get(4 + i, 3)  == "?" or 
-       gpu.get(4 + i, 3)  == "$" or
-       gpu.get(4 + i, 3)  == "!" or
-       gpu.get(4 + i, 3)  == "'" or 
-       gpu.get(4 + i, 3)  == ":" or
-       gpu.get(4 + i, 3)  == "@" or
-       gpu.get(4 + i, 3)  == "+" or
-       gpu.get(4 + i, 3)  == "`" or
-       gpu.get(4 + i, 3)  == "|" or
-       gpu.get(4 + i, 3)  == "=" then
-
-      success = false
-      print(">> Error : invalid character")
-      os.sleep(1)
-      print(">> Returning to worktable")
-      os.sleep(1)
-      break
-
-    end
-
-    i = i + 1
-    
-  end   
-
-  if name == "" then
-
-    success = false
-    print(">> Error : empty field")
-    os.sleep(1)
-    print(">> Returning to worktable")
-    os.sleep(1)
-  
-  elseif success then
-
-    print(">> Searching")
-    os.sleep(1)  
-    success = false    
-
-    if filesystem.exists(path .. name) then
-    
-      for j in filesystem.list(path) do
-        allFiles[e] = j
-        e = e + 1
-      end
-
-      i = 1
-
-      table.sort(allFiles)      
-      
-      while i <= #allFiles do
-        
-        if allFiles[i] == name then
-          index = i
-          success = true          
-          print(">> Success")
-          os.sleep(1)
-
-          page = index / 12
-          page = math.ceil(page)  
-          index = index - ((page - 1) * 12)
-
-          break 
-        end
-      
-        i = i + 1
-
-      end   
-    end
-
-    if success == false then
-      print(">> Failed")
-      os.sleep(1)
+    else
+      allFiles[k] = path .. j
+      k = k + 1
     end
   end
-
-  return index, page, success
-
-end
-
-function specialShell.input(type, path)
-
-  local name = ""
-  local success = true
-
-  local i = 0
-
-  term.setCursor(1, 1)
-  print(">> Input name of the " .. type)
-  print("<<")
-  term.setCursor(4, 2)
-  term.read()
-
-  while (gpu.get(4 + i, 2) ~= " ") and (i < 33) do
-
-    name = name .. tostring(gpu.get(4 + i, 2))
-
-    if i == 32 then  
-      
-      success = false
-      print(">> Error : name is too long")
-      os.sleep(1)
-      print(">> Returning to worktable")
-      os.sleep(1)
+  local i = 1
+  table.sort(allFiles)          
+  for i = 1, #allFiles do      
+    if allFiles[i] == item then
+      index = i          
+      page = math.ceil(index / 12)  
+      index = index - ((page - 1) * 12)
       break
-
-    end
-
-    if gpu.get(4 + i, 2)  == "#" or
-       gpu.get(4 + i, 2)  == "%" or
-       gpu.get(4 + i, 2)  == "{" or
-       gpu.get(4 + i, 2)  == "}" or 
-       gpu.get(4 + i, 2)  == "<" or 
-       gpu.get(4 + i, 2)  == ">" or
-       gpu.get(4 + i, 2)  == "*" or
-       gpu.get(4 + i, 2)  == "?" or 
-       gpu.get(4 + i, 2)  == "/" or
-       gpu.get(4 + i, 2)  == "$" or
-       gpu.get(4 + i, 2)  == "!" or
-       gpu.get(4 + i, 2)  == "'" or 
-       gpu.get(4 + i, 2)  == ":" or
-       gpu.get(4 + i, 2)  == "@" or
-       gpu.get(4 + i, 2)  == "+" or
-       gpu.get(4 + i, 2)  == "`" or
-       gpu.get(4 + i, 2)  == "|" or
-       gpu.get(4 + i, 2)  == "=" then
-    
-      success = false
-      print(">> Error : invalid character")
-      os.sleep(1)
-      print(">> Returning to worktable")
-      os.sleep(1)
-      break
-
-    end
-
-    i = i + 1
-    
-  end   
-
-  if name == "" then
-
-    success = false
-    print(">> Error : empty field")
-    os.sleep(1)
-    print(">> Returning to worktable")
-    os.sleep(1)
-
-  elseif filesystem.exists(path .. name) == true then
-
-    success = false
-    print(">> Error : already exists")
-    os.sleep(1)
-    print(">> Returning to worktable")
-    os.sleep(1)
-  
-  elseif success then
-
-    print(">> Success")
-    os.sleep(1)  
-    print(">> Go to " .. type)
-    os.sleep(1)
-
+    end 
   end
 
-  return name, success
+  return index, page   
 
 end
 
@@ -269,7 +53,7 @@ function specialShell.copying(path, item, copied, len)
   end
 end
 
-function specialShell.inserting(copyPath, path, copied, files, index)
+function specialShell.inserting(copyPath, path, copied, files, index, config)
   
   local result = 0
   local i = 1
@@ -281,14 +65,14 @@ function specialShell.inserting(copyPath, path, copied, files, index)
 
   local d = 0
 
-  local bufferBack = screenBuffer.load(15, 6, 35, 10)
+  local buffer = canvas.load(15, 6, 35, 10)
  
   for i = 1, #copied do
     
     shell.execute("/RedOS/insert_1.lua")    
-    
     gpu.set(16, 9, "                   ")
-    if #copied[i] > 19 then gpu.set(16, 9, string.sub(copied[i], 1, 17) .. "..")
+
+    if #copied[i] > 19 then gpu.set(16, 9, ".." .. string.sub(copied[i], #copied[i] - 16, #copied[i]))
       else
         gpu.set(16, 9, copied[i])
       end
@@ -296,91 +80,59 @@ function specialShell.inserting(copyPath, path, copied, files, index)
     if filesystem.exists(copyPath .. copied[i]) == false then
       if Selected[1] then
       else
-        screenBuffer.draw(15, 6, bufferBack)
-        local buffer = screenBuffer.load(15, 4, 36, 12)
-        shell.execute("/RedOS/insert_4.lua")
-        if #copied[i] > 20 then gpu.set(16, 5, string.sub(copied[i], 1, 18) .. "..")
-        else
-          gpu.set(16, 5, copied[i])
+        canvas.draw(15, 6, buffer)
+        canvas.cursor(files, index)
+        local name = copied[i] 
+        if #name > 20 then
+          name = ".." .. string.sub(name, #name - 17, #name)
         end
-        menu = menuInsert.openInsert_4()
-        screenBuffer.draw(15, 4, buffer)
-        if #files > 0 then
-          cursor.fileSelect(files, index)
-        end 
+        menu = canvas.menuShow(15, 4, 36, 12, 16, 9, 20, "/RedOS/insert_4.lua", 16, 5, name, 2, 1, files, index) 
         if menu == 1 then
-          buffer = screenBuffer.load(15, 5, 35, 11)
-          menu = menuSwitcher.ApplyToAll("       Skip        ")
+          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
           if menu then
             Selected[1] = true
-          else
-          end 
-          screenBuffer.draw(15, 5, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
           end   
         else
-          result = 1
+          canvas.cursor(files, index)
           break
         end
       end
     elseif (path == copyPath) and (filesystem.isDirectory(copyPath .. copied[i]) == false) then
       if Selected[2] then
       else
-        screenBuffer.draw(15, 6, bufferBack)
-        local buffer = screenBuffer.load(15, 3, 36, 13)
-        shell.execute("/RedOS/insert_2.lua")
-        if #copied[i] > 20 then gpu.set(16, 4, string.sub(copied[i], 1, 18) .. "..")
-        else
-          gpu.set(16, 4, copied[i])
+        canvas.draw(15, 6, buffer)
+        canvas.cursor(files, index)
+        local name = copied[i]
+        if #name > 20 then 
+          name = ".." .. string.sub(name, #name - 17, #name)
         end
-        menu = menuInsert.openInsert_2()
-        screenBuffer.draw(15, 3, buffer)
-        if #files > 0 then
-          cursor.fileSelect(files, index)
-        end 
+        menu = canvas.menuShow(15, 3, 36, 13, 16, 8, 20, "/RedOS/insert_2.lua", 16, 4, name, 3, 1, files, index)
         if menu == 1 then
-          buffer = screenBuffer.load(1, 1, 50, 16)
-          term.clear()
-          local name, success = specialShell.input("file", path)
-          screenBuffer.draw(1, 1, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
+          local name = canvas.input(12, 6, 39, 10, 13, 9, 25, "/RedOS/input.lua", "   Enter new file name    ", 13, 7, filesystem.name(copied[i]), files, index)
+          if string.find(name, "/") then
+            name = string.sub(name, 1, string.find(name,"/") - 1)
           end
-          if success then
-            d = d + 1
-            local full = path .. copied[i]
-            local k = #full
-            while k > 0 do
-              k = k - 1
-              if string.sub(full, k, k) == "/" then
-                break
-              end
-            end
-            if k == 0 then
-              full = name
-            else
-              full = string.sub(full, 1, k)
-              full = full .. name
-            end
-            filesystem.copy(copyPath .. copied[i], full)  
-          else
-            result = 1
+          if name == "" then
+            canvas.show(15, 5, 36, 11, 16, 8, "     Empty field    ", "/RedOS/error.lua", 16, 10, 11, files, index)
             break
+          elseif (name == string.sub(copied[i], #copied[i] - #name + 1, #copied[i])) or (filesystem.exists(path .. filesystem.path(copied[i]) .. name)) then
+            canvas.show(15, 5, 36, 11, 16, 8, "   Already exists   ", "/RedOS/error.lua", 16, 10, 11, files, index)
+            break
+          else
+            d = d + 1
+            --copied[i] = filesystem.path(copied[i]) .. name
+            filesystem.copy(copyPath .. copied[i], path .. filesystem.path(copied[i])  .. name)
+            if filesystem.path(copied[i]) == "/" then
+              copied[i] = name
+            end
           end 
         elseif menu == 2 then
-          buffer = screenBuffer.load(15, 5, 35, 11)
-          menu = menuSwitcher.ApplyToAll("       Skip        ")
+          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)  
           if menu then
             Selected[2] = true
-          else
           end 
-          screenBuffer.draw(15, 5, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
-          end
         else
-          result = 1
+          canvas.cursor(files, index)
           break
         end
       end
@@ -390,104 +142,67 @@ function specialShell.inserting(copyPath, path, copied, files, index)
         d = d + 1
       elseif Selected[4] then
       else
-        screenBuffer.draw(15, 6, bufferBack)
-        local buffer = screenBuffer.load(15, 2, 36, 14)
-        shell.execute("/RedOS/insert_3.lua")
-        if #copied[i] > 20 then gpu.set(16, 3, string.sub(copied[i], 1, 18) .. "..")
-        else
-          gpu.set(16, 3, copied[i])
+        canvas.draw(15, 6, buffer)
+        canvas.cursor(files, index)
+        local name = copied[i]
+        if #name > 20 then 
+          name = ".." .. string.sub(name, #name - 17, name)
         end
-        menu = menuInsert.openInsert_3()
-        screenBuffer.draw(15, 2, buffer)
-        if #files > 0 then
-          cursor.fileSelect(files, index)
-        end 
+        menu = canvas.menuShow(15, 2, 36, 14, 16, 7, 20, "/RedOS/insert_3.lua", 16, 3, name, 4, 1, files, index) 
         if menu == 1 then
-          buffer = screenBuffer.load(1, 1, 50, 16)
-          term.clear()
-          local name, success = specialShell.input("file", path)
-          screenBuffer.draw(1, 1, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
+          local name = canvas.input(12, 6, 39, 10, 13, 9, 25, "/RedOS/input.lua", "   Enter new file name    ", 13, 7, filesystem.name(copied[i]), files, index)
+          if string.find(name, "/") then
+            name = string.sub(name, 1, string.find(name,"/") - 1)
           end
-          if success then
-            d = d + 1
-            local full = path .. copied[i]
-            local k = #full
-            while k > 0 do
-              k = k - 1
-              if string.sub(full, k, k) == "/" then
-                break
-              end
-            end
-            if k == 0 then
-              full = name
-            else
-              full = string.sub(full, 1, k)
-              full = full .. name
-            end
-            filesystem.copy(copyPath .. copied[i], full)  
-          else
-            result = 1
+          if name == "" then
+            canvas.show(15, 5, 36, 11, 16, 8, "     Empty field    ", "/RedOS/error.lua", 16, 10, 11, files, index)
             break
+          elseif (name == string.sub(copied[i], #copied[i] - #name + 1 , #copied[i])) or (filesystem.exists(path .. filesystem.path(copied[i]) .. name)) then
+            canvas.show(15, 5, 36, 11, 16, 8, "   Already exists   ", "/RedOS/error.lua", 16, 10, 11, files, index)
+            break
+          else
+            d = d + 1
+            --copied[i] = filesystem.path(copied[i]) .. name 
+            filesystem.copy(copyPath .. copied[i], path .. filesystem.path(copied[i]) .. name)
+            if filesystem.path(copied[i]) == "/" then
+              copied[i] = name
+            end
           end 
         elseif menu == 2 then
-          buffer = screenBuffer.load(15, 5, 35, 11)
-          menu = menuSwitcher.ApplyToAll("      Replace      ")
+          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
           if menu then
             Selected[3] = true
-          else
-            filesystem.copy(copyPath .. copied[i], path .. copied[i])
-            d = d + 1
-          end 
-          screenBuffer.draw(15, 5, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
-          end   
+          end
+          filesystem.copy(copyPath .. copied[i], path .. copied[i])
+          d = d + 1    
         elseif menu == 3 then
-          buffer = screenBuffer.load(15, 5, 35, 11)
-          menu = menuSwitcher.ApplyToAll("       Skip        ")
+          menu = canvas.switch(15, 5, 35, 11, "/RedOS/choice.lua", 16, 26, 9, 10, 16, 8, "   Apply to all    ", true, files, index, config)
           if menu then
             Selected[4] = true
-          else
-          end 
-          screenBuffer.draw(15, 5, buffer)
-          if #files > 0 then
-            cursor.fileSelect(files, index)
           end 
         else
-          result = 1
+          canvas.cursor(files, index)
           break
         end
       end
     else
       if (filesystem.isDirectory(copyPath .. copied[i])) and not (filesystem.exists(path .. copied[i])) then
         filesystem.makeDirectory(path .. copied[i])
-      else 
+        d = d + 1
+      elseif not filesystem.isDirectory(copyPath .. copied[i]) then 
         filesystem.copy(copyPath .. copied[i], path .. copied[i])
+        d = d + 1
       end
-      d = d + 1
     end
   end 
-
-  if (result == 1) and (i > 1) then
-    local k
-    for k = 1, i - 1 do
-
-    end
-  end
 
   if d == 0 then
     result = 1
   end
 
-  if result == 0 then
-    screenBuffer.draw(15, 6, bufferBack)
-    if #files > 0 then
-      cursor.fileSelect(files, index)
-    end
-  end
-
+  canvas.draw(15, 6, buffer)
+  canvas.cursor(files, index)
+  
   return result
 end
 
