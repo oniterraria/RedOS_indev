@@ -10,4 +10,4 @@ https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/insert_5.l
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/settings.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/system.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/view.lua
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/workspace.lua&
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/workspace.lua
