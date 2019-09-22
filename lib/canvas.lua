@@ -322,7 +322,7 @@ local function inInput(x, y, l, s)
         canvas.inverse(x + i, y, x + i, y, "black")
         i = i - 1
         canvas.inverse(x + i, y, x + i, y, "white")
-        item = unicode.sub(item, 1, #item - 1)
+        item = string.sub(item, 1, #item - 1)
       elseif (key > 32) and (key ~= 127) and (i < l) then
         gpu.set(x + i, y, unicode.char(key))
         canvas.inverse(x + i, y, x + i, y, "black")

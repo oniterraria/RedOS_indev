@@ -49,7 +49,13 @@ local function initialization()
     local file_2 = io.open("/RedOS/.path")
     k = tonumber(file_2:read("*l"))
     for i = 1, k do
-      tree[i] = file_2:read("*l")
+      local test = file_2:read("*l")
+      if filesystem.exists(test) then
+        tree[i] = test
+      else
+        k = i - 1
+        break
+      end
     end
     path = tree[k]
     file_2:close()
@@ -452,8 +458,28 @@ end
 startUp()
 
 while work do
-  local name, _, mX, mY, button, _ = event.pull()
-  if name == "touch" then
+  local name, object, mX, mY, button, _ = event.pull()
+  if ((name == "component_added") and (mX == "filesystem")) then
+    canvas.show(15, 5, 36, 11, 16, 8, string.sub(object, 1, 18) .. "..", "/RedOS/disk_connected.lua", 16, 10, 11, files, index)
+    if (path == "/mnt/") then
+      canvas.clear(index)
+      index, page = specialShell.position(path, path .. string.sub(object, 1, 3) .. "/", config[2])
+      loadUp()
+    end
+  elseif ((name == "component_removed") and (mX == "filesystem")) then
+    canvas.message(15, 6, 36, 10, "/RedOS/disk_disconnected.lua", 16, 9, 19, files, index)
+    if (string.find(path, "/mnt/") and (filesystem.exists(path .. item) == false)) then
+      k = 2
+      tree[1] = "/"
+      tree[2] = "/mnt/"
+      canvas.clear(index)
+      index = 1
+      page = 1
+      path = tree[2]
+      loadUp()
+      savepath()
+    end
+  elseif name == "touch" then
     if (mY == 1) and (button == 0) then
       if mX < 14 then
         editor()
