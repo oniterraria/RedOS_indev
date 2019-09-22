@@ -124,6 +124,9 @@ status("Initializing file system...")
 -- system module from this point on.
 require("filesystem").mount(computer.getBootAddress(), "/")
 
+local disk = component.proxy(computer.getBootAddress())
+disk.setLabel("RedOS v1.2")
+
 status("Running boot scripts...")
 
 -- Run library startup scripts. These mostly initialize event handlers.
