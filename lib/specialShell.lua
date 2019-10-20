@@ -29,7 +29,7 @@ function specialShell.position(path, item, config)
     end
   end
   local i = 1
-  table.sort(allFiles)          
+  table.sort(allFiles)
   for i = 1, #allFiles do      
     if allFiles[i] == item then
       index = i          
@@ -39,8 +39,10 @@ function specialShell.position(path, item, config)
     end 
   end
 
-  return index, page   
+  index = (index or 1)
+  page = (page or 1)  
 
+  return index, page   
 end
 
 function specialShell.copying(path, item, copied, len)
