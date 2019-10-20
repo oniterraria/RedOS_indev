@@ -123,7 +123,7 @@ local function format()
 end
 
 local function pageDraw(path)
-  AllPages = fileList.pages(path)
+  AllPages = fileList.pages(path, config[2])
   gpu.set(44, 16, "/ " .. tostring(AllPages))
 end
 
@@ -396,6 +396,20 @@ local function file()
   end
 end
 
+local function disk()
+  menu = canvas.menu(19, 6, 31, 10, 20, 7, 10, "RedOS/disk.lua", 2, 1, files, index)
+  if menu == 1 then
+    canvas.clear(index)
+    tree[k] = path
+    path = path .. item
+    page = 1
+    index = 1
+    loadUp()
+    k = k + 1
+    savepath() 
+  end
+end
+
 local function folder()
   menu = canvas.menu(19, 3, 31, 13, 20, 4, 10, "RedOS/folder.lua", 5, 1, files, index)     
   if menu == 1 then
@@ -460,7 +474,7 @@ startUp()
 while work do
   local name, object, mX, mY, button, _ = event.pull()
   if ((name == "component_added") and (mX == "filesystem")) then
-    canvas.show(15, 5, 36, 11, 16, 8, string.sub(object, 1, 18) .. "..", "/RedOS/disk_connected.lua", 16, 10, 11, files, index)
+    canvas.show(7, 5, 44, 11, 8, 8, object, "/RedOS/disk_connected.lua", 8, 10, 36, files, index)
     if (path == "/mnt/") then
       canvas.clear(index)
       index, page = specialShell.position(path, path .. string.sub(object, 1, 3) .. "/", config[2])
@@ -468,7 +482,7 @@ while work do
     end
   elseif ((name == "component_removed") and (mX == "filesystem")) then
     canvas.message(15, 6, 36, 10, "/RedOS/disk_disconnected.lua", 16, 9, 19, files, index)
-    if (string.find(path, "/mnt/") and (filesystem.exists(path .. item) == false)) then
+    if ((string.find(path, "/mnt/") and (filesystem.exists(path .. item) == false))) or (path == "/mnt/") then
       k = 2
       tree[1] = "/"
       tree[2] = "/mnt/"
@@ -502,7 +516,11 @@ while work do
           k = k + 1
           savepath()
         elseif button == 1 then
-          folder()
+          if ((path == "/mnt/") or (item == "mnt/")) then
+            disk()
+          else
+            folder()
+          end
         end
       elseif item ~= "" then
         if button == 0 then
@@ -524,7 +542,11 @@ while work do
     local key = mY
     if key == 28 then      
       if (filesystem.isDirectory(path .. item)) and (item ~= "") then
-        folder()
+        if ((path == "/mnt/") or (item == "mnt/")) then
+          disk()
+        else
+          folder()
+        end
       elseif item ~= "" then 
         file()
       end
