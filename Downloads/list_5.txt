@@ -12,4 +12,4 @@ https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/system.lua
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/view.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/disk_connected.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/disk_disconnected.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/workspace.lua
+https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/workspace.lua&
