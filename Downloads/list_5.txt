@@ -13,16 +13,3 @@ https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/view.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/disk_connected.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/disk_disconnected.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/workspace.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/.config&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/.path&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/.item&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/buffer.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/buffer_cleaned.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/choice.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/config.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/copy.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/core.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/editor.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/error.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/file.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/RedOS/disk.lua
