@@ -1,3 +1,3 @@
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/lib/canvas.lua&
 https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/lib/fileList.lua&
-https://raw.githubusercontent.com/LexaDriver/RedOS_indev/master/lib/specialShell.lua
+https://raw.githubusercontent.com/oniterraria/RedOS_indev/refs/heads/master/lib/specialShell.lua
